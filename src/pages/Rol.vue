@@ -173,6 +173,16 @@
             >
               <i class="fas fa-plus-circle"></i> Crear registro</base-button
             >
+
+            <base-button
+              slot="footer"
+              type="success"
+              fill
+              v-on:click="exportarExcel()"
+            >
+              <i class="tim-icons icon-cloud-download-93"></i> Exportar a
+              Excel</base-button
+            >
           </div>
         </card>
       </div>
@@ -316,6 +326,11 @@ export default {
       this.miModalVisible = true;
     },
 
+    //rc95 13/02/2022 10:48
+    exportarExcel() {
+      alert("generar excel");
+    },
+
     eventoCrearRegistro() {
       try {
         axios
@@ -362,7 +377,7 @@ export default {
 
     borrarRegistro(ID_REGISTRO, NOMBRE_REGISTRO) {
       this.miModalYNVisible = true;
-      this.txtID = ID_REGISTRO;//rc95 12/02/2022 21:04
+      this.txtID = ID_REGISTRO; //rc95 12/02/2022 21:04
     },
 
     confirmarEliminar() {

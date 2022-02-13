@@ -89,6 +89,42 @@
                     id="txtNOMBRE"
                   >
                   </base-input>
+
+                  <base-input
+                    label="CORREO"
+                    placeholder="CORREO"
+                    v-model="txtCORREO"
+                    id="txtCORREO"
+                  >
+                  </base-input>
+
+                  <base-input
+                    label="TELEFONO"
+                    placeholder="TELEFONO"
+                    v-model="txtTELEFONO"
+                    id="txtTELEFONO"
+                  >
+                  </base-input>
+                </div>
+
+                <div class="col-md-12 pr-md-1">
+                  <base-input
+                    label="DIRECCION"
+                    placeholder="DIRECCION"
+                    v-model="txtDIRECCION"
+                    id="txtDIRECCION"
+                  >
+                  </base-input>
+                </div>
+                <div class="col-md-12 pr-md-1">
+                  <label class="control-label"> Fecha de Nacimineto </label>
+                  <input
+                    type="date"
+                    id="txtFechaNacimiento"
+                    name="txtFechaNacimiento"
+                    class="form-control"
+                    aria-describedby="addon-right addon-left"
+                  />
                 </div>
               </div>
             </div>
@@ -123,7 +159,7 @@
     </modal>
 
     <div class="row">
-      <div class="col-6">
+      <div class="col-12">
         <card>
           <h4 slot="header" class="card-title">Registros existentes</h4>
           <div class="table-responsive">
@@ -132,6 +168,13 @@
                 <tr>
                   <th>ID</th>
                   <th>Nombre</th>
+                  <th>TipoDocumento</th>
+                  <th>Sexo</th>
+                  <th>FechaNacimiento</th>
+                  <th>Edad</th>
+                  <th>Correo</th>
+                  <th>Telefono</th>
+                  <th>Direccion</th>
                   <th>Editar</th>
                   <th>Eliminar</th>
                 </tr>
@@ -144,11 +187,40 @@
                   <td>
                     {{ registro.NOMBRE }}
                   </td>
+                  <td>
+                    {{ registro.TIPO_DOCUMENTO }}
+                  </td>
+                  <td>
+                    {{ registro.SEXO }}
+                  </td>
+                  <td>
+                    {{ registro.FECHA_NACIMIENTO }}
+                  </td>
+                  <td>
+                    {{ registro.EDAD }}
+                  </td>
+                  <td>
+                    {{ registro.CORREO }}
+                  </td>
+                  <td>
+                    {{ registro.TELEFONO }}
+                  </td>
+                  <td>
+                    {{ registro.DIRECCION }}
+                  </td>
                   <td class="td-actions">
                     <base-button
                       type="link"
                       aria-label="edit button"
-                      v-on:click="editarRegistro(registro.ID, registro.NOMBRE)"
+                      v-on:click="
+                        editarRegistro(
+                          registro.ID,
+                          registro.NOMBRE,
+                          registro.CORREO,
+                          registro.TELEFONO,
+                          registro.DIRECCION
+                        )
+                      "
                     >
                       <i class="fas fa-pencil-alt"></i>
                     </base-button>
@@ -170,10 +242,8 @@
               type="primary"
               fill
               v-on:click="crearRegistro()"
+              ><i class="fas fa-plus-circle"></i> Crear registro</base-button
             >
-              <i class="fas fa-plus-circle"></i> Crear registro</base-button
-            >
-
             <base-button
               slot="footer"
               type="success"
@@ -187,7 +257,7 @@
         </card>
       </div>
 
-      <div class="col-lg-6">
+      <div class="col-lg-12">
         <card type="chart">
           <template slot="header">
             <h5 class="card-category">Gráfico estadístico</h5>
@@ -234,10 +304,10 @@ export default {
   data() {
     BaseInput;
     return {
-      url: config.api_url + "/traer_estados/",
-      url_insert: config.api_url + "/crear_estado/",
-      url_update: config.api_url + "/editar_estado/",
-      url_delete: config.api_url + "/eliminar_estado/",
+      url: config.api_url + "/traer_personas/",
+      url_insert: config.api_url + "/crear_persona/",
+      url_update: config.api_url + "/editar_persona/",
+      url_delete: config.api_url + "/eliminar_persona/",
       resultado: null,
 
       lblTotal: "6.500 Gs",
@@ -247,6 +317,9 @@ export default {
 
       txtID: null,
       txtNOMBRE: null,
+      txtCORREO: null,
+      txtTELEFONO: null,
+      txtDIRECCION: null,
 
       esModificar: null,
       esCrear: null,
@@ -306,12 +379,15 @@ export default {
         });
     },
 
-    editarRegistro(ID_REGISTRO, NOMBRE_REGISTRO) {
+    editarRegistro(ID_REGISTRO, NOMBRE_REGISTRO, CORREO, TELEFONO, DIRECCION) {
       this.esModificar = true;
       this.esCrear = false;
 
       this.txtID = ID_REGISTRO;
       this.txtNOMBRE = NOMBRE_REGISTRO;
+      this.txtCORREO = CORREO;
+      this.txtTELEFONO = TELEFONO;
+      this.txtDIRECCION = DIRECCION;
 
       this.miModalVisible = true;
     },
@@ -322,6 +398,9 @@ export default {
 
       this.txtID = null;
       this.txtNOMBRE = null;
+      this.txtCORREO = null;
+      this.txtTELEFONO = null;
+      this.txtDIRECCION = null;
 
       this.miModalVisible = true;
     },
@@ -335,7 +414,12 @@ export default {
       try {
         axios
           .get(this.url_insert, {
-            params: { nombre: this.txtNOMBRE },
+            params: {
+              nombre: this.txtNOMBRE,
+              correo: this.txtCORREO,
+              telefono: this.txtTELEFONO,
+              direccion: this.txtDIRECCION,
+            },
           })
           .then((response) => {
             this.notifyVue("Se ha creado el registro", "info");
@@ -357,7 +441,13 @@ export default {
       try {
         axios
           .get(this.url_update, {
-            params: { id_registro: this.txtID, nombre: this.txtNOMBRE },
+            params: {
+              id_registro: this.txtID,
+              nombre: this.txtNOMBRE,
+              correo: this.txtCORREO,
+              telefono: this.txtTELEFONO,
+              direccion: this.txtDIRECCION,
+            },
           })
           .then((response) => {
             this.notifyVue("Se ha modificado el registro", "info");

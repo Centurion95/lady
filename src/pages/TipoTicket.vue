@@ -234,10 +234,10 @@ export default {
   data() {
     BaseInput;
     return {
-      url: config.api_url + "/traer_estados/",
-      url_insert: config.api_url + "/crear_estado/",
-      url_update: config.api_url + "/editar_estado/",
-      url_delete: config.api_url + "/eliminar_estado/",
+      url: config.api_url + "/traer_tipo_tickets/",
+      url_insert: config.api_url + "/crear_tipo_ticket/",
+      url_update: config.api_url + "/editar_tipo_ticket/",
+      url_delete: config.api_url + "/eliminar_tipo_ticket/",
       resultado: null,
 
       lblTotal: "6.500 Gs",

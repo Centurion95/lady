@@ -15,39 +15,68 @@
           :name="$t('sidebar.tabla_estado')"
           icon="fas fa-list"
         />
+
         <sidebar-link
           to="/rol"
           :name="$t('sidebar.tabla_rol')"
           icon="fas fa-list"
         />
+
         <sidebar-link
           to="/empresa"
           :name="$t('sidebar.tabla_empresa')"
+          icon="tim-icons icon-settings-gear-63"
+        />
+
+        <sidebar-link
+          to="/usuario"
+          :name="$t('sidebar.tabla_usuario')"
+          icon="tim-icons icon-settings-gear-63"
+        />
+
+        <sidebar-link
+          to="/pago_usuario"
+          :name="$t('sidebar.tabla_pago_usuario')"
+          icon="tim-icons icon-settings-gear-63"
+        />
+
+        <sidebar-link
+          to="/tipo_documento"
+          :name="$t('sidebar.tabla_tipo_documento')"
           icon="fas fa-list"
         />
 
         <sidebar-link
-          @click="boton"
-          to="#"
-          :name="$t('ejemplo')"
-          icon="tim-icons icon-atom"
+          to="/tipo_ticket"
+          :name="$t('sidebar.tabla_tipo_ticket')"
+          icon="fas fa-list"
         />
-        <ul v-show="mostrar">
-          <li><a href="#">Menu 1</a></li>
-          <li><a href="#">Menu 2</a></li>
-          <li><a href="#">Menu 3</a></li>
-          <li><a href="#">Menu 4</a></li>
-        </ul>
-        <!-- <sidebar-link to="/tabla?nombre_tabla='TIPO_DOCUMENTO'" :name="$t('sidebar.tabla')" icon="fas fa-list"/> -->
 
-        <!-- rc95 16/08/2021 23:50 - https://vueschool.io/articles/vuejs-tutorials/how-to-use-vue-router-a-complete-tutorial/ -->
+        <sidebar-link
+          to="/persona"
+          :name="$t('sidebar.tabla_persona')"
+          icon="tim-icons icon-single-02"
+        />
+
+        <sidebar-link
+          to="/proveedor"
+          :name="$t('sidebar.tabla_proveedor')"
+          icon="fas fa-list"
+        />
+
+        <sidebar-link
+          to="/producto"
+          :name="$t('sidebar.tabla_producto')"
+          icon="fas fa-list"
+        />
+
+        <sidebar-link
+          to="/cliente"
+          :name="$t('sidebar.tabla_cliente')"
+          icon="fas fa-list"
+        />
+
         <!-- <sidebar-link
-          :to="{ name: 'tabla', params: { nombre_tabla: 'TIPO_DOCUMENTO' } }"
-          :name="$t('sidebar.tabla')"
-          icon="fas fa-list"
-        /> -->
-
-        <sidebar-link
           class="sidebar-normal"
           :to="{ name: 'tabla', params: { nombre_tabla: 'ESTADO' } }"
           name="ESTADOS"
@@ -57,14 +86,14 @@
           :to="{ name: 'tabla', params: { nombre_tabla: 'ROL' } }"
           name="ROLES"
           icon="fas fa-list"
-        />
+        /> -->
 
-        <sidebar-link
+        <!-- <sidebar-link
           to="/icons"
           :name="$t('sidebar.icons')"
           icon="tim-icons icon-atom"
         />
-        <!-- <sidebar-link to="/maps" :name="$t('sidebar.maps')" icon="tim-icons icon-pin"/>-->
+        
         <sidebar-link
           to="/notifications"
           :name="$t('sidebar.notifications')"
@@ -84,7 +113,7 @@
           to="/typography"
           :name="$t('sidebar.typography')"
           icon="tim-icons icon-align-center"
-        />
+        /> -->
 
         <sidebar-link
           to="/reports"

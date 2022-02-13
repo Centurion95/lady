@@ -8,6 +8,7 @@
 import DashboardLayout from '../layout/dashboard/DashboardLayout.vue';
 import Starter from '@/pages/Dashboard.vue';
 
+const Dashboard_bkp = () => import(/* webpackChunkName: "common" */ "@/pages/Dashboard_bkp.vue");
 
 const Estado = () => import(/* webpackChunkName: "common" */ "@/pages/Estado.vue");
 const Rol = () => import(/* webpackChunkName: "common" */ "@/pages/Rol.vue");
@@ -16,6 +17,10 @@ const Tabla = () => import(/* webpackChunkName: "common" */ "@/pages/Tabla.vue")
 const About = () => import(/* webpackChunkName: "common" */ "@/pages/About.vue");
 const Reports = () => import(/* webpackChunkName: "common" */ "@/pages/Reports.vue");
 const Graphics = () => import(/* webpackChunkName: "common" */ "@/pages/Graphics.vue");
+const TipoDocumento = () => import(/* webpackChunkName: "common" */ "@/pages/TipoDocumento.vue");
+const TipoTicket = () => import(/* webpackChunkName: "common" */ "@/pages/TipoTicket.vue");
+const Proveedor = () => import(/* webpackChunkName: "common" */ "@/pages/Proveedor.vue");
+const Persona = () => import(/* webpackChunkName: "common" */ "@/pages/Persona.vue");
 
 const Profile = () => import(/* webpackChunkName: "common" */ "@/pages/Profile.vue");
 const Notifications = () => import(/* webpackChunkName: "common" */"@/pages/Notifications.vue");
@@ -42,6 +47,11 @@ import NotFound from "@/pages/NotFoundPage.vue";
           path: 'dashboard',
           name: 'dashboard',
           components: { default: Starter }
+        },
+        {
+          path: "dashboard_bkp",
+          name: "dashboard_bkp",
+          component: Dashboard_bkp
         },
         {
           path: "profile",
@@ -92,6 +102,26 @@ import NotFound from "@/pages/NotFoundPage.vue";
           path: "graphics",
           name: "graphics",
           component: Graphics
+        },
+        {
+          path: "tipo_documento",
+          name: "tipo_documento",
+          component: TipoDocumento
+        },
+        {
+          path: "tipo_ticket",
+          name: "tipo_ticket",
+          component: TipoTicket
+        },
+        {
+          path: "proveedor",
+          name: "proveedor",
+          component: Proveedor
+        },
+        {
+          path: "persona",
+          name: "persona",
+          component: Persona
         },
         {
           path: "maps",

@@ -113,12 +113,19 @@
   "sidebar": {
     "title": "Lady",
 
-    "tabla": "tablas",
-    "tabla_estado": "estados",
-    "tabla_rol": "roles",
-    "tabla_empresa": "empresas",
+    "tabla": "Tablas",
+    "tabla_estado": "Estados",
+    "tabla_rol": "Roles",
+    "tabla_empresa": "Empresas",
+    "tabla_tipo_documento": "Tipos de documento",
+    "tabla_tipo_ticket": "Tipos de ticket",
+    "tabla_persona": "Personas",
+    "tabla_proveedor": "Proveedores",
+    "tabla_producto": "Productos",
+    "tabla_usuario": "Usuarios",
+    "tabla_cliente": "Clientes",
+    "tabla_pago_usuario": "Pagos de usuarios",
 
-        
     "reports": "Reportes",
     "graphics": "Gráficos",
     "about": "Acerca de",

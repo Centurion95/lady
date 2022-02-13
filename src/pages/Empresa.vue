@@ -216,8 +216,16 @@
               type="primary"
               fill
               v-on:click="crearRegistro()"
-              ><i class="fas fa-plus-circle"></i> Crear
-              registro</base-button
+              ><i class="fas fa-plus-circle"></i> Crear registro</base-button
+            >
+            <base-button
+              slot="footer"
+              type="success"
+              fill
+              v-on:click="exportarExcel()"
+            >
+              <i class="tim-icons icon-cloud-download-93"></i> Exportar a
+              Excel</base-button
             >
           </div>
         </card>
@@ -271,6 +279,9 @@ export default {
     BaseInput;
     return {
       url: config.api_url + "/traer_empresas/",
+      url_insert: config.api_url + "/crear_empresa/",
+      url_update: config.api_url + "/editar_empresa/",
+      url_delete: config.api_url + "/eliminar_empresa/",
       resultado: null,
 
       lblTotal: "6.500 Gs",
@@ -304,40 +315,44 @@ export default {
     };
   },
   created() {
-    axios
-      .get(this.url, "")
-      .then((response) => {
-        // this.resultado = response.data;
-        this.resultado = response.data.tabla; //rc95 13/08/2021 20:26
-        // console.log(response.data);
-
-        //rc95 13/08/2021 20:16
-        this.blueBarChart = {
-          extraOptions: chartConfigs.barChartOptions,
-          chartData: {
-            labels: response.data.titulos,
-            datasets: [
-              {
-                label: "Cantidad",
-                fill: true,
-                borderColor: config.colors.info,
-                borderWidth: 2,
-                borderDash: [],
-                borderDashOffset: 0.0,
-                data: response.data.cantidades,
-              },
-            ],
-          },
-          gradientColors: config.colors.primaryGradient,
-          gradientStops: [1, 0.4, 0],
-        };
-        this.lblTotal = response.data.total;
-      })
-      .catch((e) => {
-        alert(e);
-      });
+    this.actualizarPantalla();
   },
   methods: {
+    actualizarPantalla() {
+      axios
+        .get(this.url, "")
+        .then((response) => {
+          // this.resultado = response.data;
+          this.resultado = response.data.tabla; //rc95 13/08/2021 20:26
+          // console.log(response.data);
+
+          //rc95 13/08/2021 20:16
+          this.blueBarChart = {
+            extraOptions: chartConfigs.barChartOptions,
+            chartData: {
+              labels: response.data.titulos,
+              datasets: [
+                {
+                  label: "Cantidad",
+                  fill: true,
+                  borderColor: config.colors.info,
+                  borderWidth: 2,
+                  borderDash: [],
+                  borderDashOffset: 0.0,
+                  data: response.data.cantidades,
+                },
+              ],
+            },
+            gradientColors: config.colors.primaryGradient,
+            gradientStops: [1, 0.4, 0],
+          };
+          this.lblTotal = response.data.total;
+        })
+        .catch((e) => {
+          alert(e);
+        });
+    },
+
     editarRegistro(ID_REGISTRO, NOMBRE_REGISTRO, CORREO, TELEFONO, DIRECCION) {
       this.esModificar = true;
       this.esCrear = false;
@@ -364,29 +379,91 @@ export default {
       this.miModalVisible = true;
     },
 
-    eventoCrearRegistro() {
-      this.notifyVue("Se ha creado el registro", "info");
+    //rc95 13/02/2022 10:48
+    exportarExcel() {
+      alert("generar excel");
+    },
 
-      this.miModalVisible = false;
-      //to-do: aqui refrescar la vista
+    eventoCrearRegistro() {
+      try {
+        axios
+          .get(this.url_insert, {
+            params: {
+              nombre: this.txtNOMBRE,
+              correo: this.txtCORREO,
+              telefono: this.txtTELEFONO,
+              direccion: this.txtDIRECCION,
+            },
+          })
+          .then((response) => {
+            this.notifyVue("Se ha creado el registro", "info");
+            this.miModalVisible = false;
+
+            this.actualizarPantalla();
+          })
+          .catch((e) => {
+            alert(e);
+            this.notifyVue("Ocurrió un error", "danger");
+          });
+      } catch (e) {
+        alert(e);
+        this.notifyVue("Ocurrió un error", "danger");
+      }
     },
 
     eventoModificarRegistro() {
-      this.notifyVue("Se ha modificado el registro", "success");
+      try {
+        axios
+          .get(this.url_update, {
+            params: {
+              id_registro: this.txtID,
+              nombre: this.txtNOMBRE,
+              correo: this.txtCORREO,
+              telefono: this.txtTELEFONO,
+              direccion: this.txtDIRECCION,
+            },
+          })
+          .then((response) => {
+            this.notifyVue("Se ha modificado el registro", "info");
+            this.miModalVisible = false;
 
-      this.miModalVisible = false;
-      //to-do: aqui refrescar la vista
+            this.actualizarPantalla();
+          })
+          .catch((e) => {
+            alert(e);
+            this.notifyVue("Ocurrió un error", "danger");
+          });
+      } catch (e) {
+        alert(e);
+        this.notifyVue("Ocurrió un error", "danger");
+      }
     },
 
     borrarRegistro(ID_REGISTRO, NOMBRE_REGISTRO) {
       this.miModalYNVisible = true;
+      this.txtID = ID_REGISTRO; //rc95 12/02/2022 21:04
     },
 
     confirmarEliminar() {
-      //alert("eliminado: " + this.txtNOMBRE);
-      this.notifyVue("Se ha eliminado el registro", "danger");
-      this.miModalYNVisible = false;
-      //to-do: aqui refrescar la vista
+      try {
+        axios
+          .get(this.url_delete, {
+            params: { id_registro: this.txtID },
+          })
+          .then((response) => {
+            this.notifyVue("Se ha eliminado el registro", "info");
+            this.miModalYNVisible = false;
+
+            this.actualizarPantalla();
+          })
+          .catch((e) => {
+            alert(e);
+            this.notifyVue("Ocurrió un error", "danger");
+          });
+      } catch (e) {
+        alert(e);
+        this.notifyVue("Ocurrió un error", "danger");
+      }
     },
 
     //rc95 16/08/2021 22:26
